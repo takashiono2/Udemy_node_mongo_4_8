@@ -5,6 +5,8 @@ const connectDB = require('./db/connect');
 
 require('dotenv').config();
 
+app.use(express.json());
+
 const POAT = 3000;
 
 app.use('/api/vi/tasks', tasksRoute);
