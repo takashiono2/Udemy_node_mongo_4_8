@@ -7,8 +7,7 @@ const getAllTasks = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-  res.send('タスクを取得しました。');
-}
+};
 const createTask = async (req, res) => {
   try {
     const createTask = await Task.create(req.body);
@@ -16,16 +15,47 @@ const createTask = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-}
-const getSingleTask = (req, res) => {
-  res.send('特定のタスクを取得しました');
-}
-const updateTask = (req, res) => {
-  res.send('特定のタスクを更新しました');
-}
-const deleteTask = (req, res) => {
-  res.send('特定のタスクを削除しました');
-}
+};
+const getSingleTask = async (req, res) => {
+  try {
+    const getSingleTask = await Task.findOne({ _id: req.params.id });
+
+    if (!getSingleTask) {
+      return res.status(404).json({ msg: `_id: ${req.params.id}が見つかりません` });
+    }
+    res.status(200).json(getSingleTask);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+const updateTask = async (req, res) => {
+  try {
+    const updateTask = await Task.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true }
+    );
+
+    if (!updateTask) {
+      return res.status(404).json({ msg: `_id: ${req.params.id}が見つかりません` });
+    }
+    res.status(200).json(updateTask);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+const deleteTask = async (req, res) => {
+  try {
+    const deleteTask = await Task.findOneAndDelete({ _id: req.params.id });
+
+    if (!deleteTask) {
+      return res.status(404).json({ msg: `_id: ${req.params.id}が見つかりません` });
+    }
+    res.status(200).json(deleteTask);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 module.exports = {
   getAllTasks,
