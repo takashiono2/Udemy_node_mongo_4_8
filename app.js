@@ -6,10 +6,11 @@ const connectDB = require('./db/connect');
 require('dotenv').config();
 
 app.use(express.json());
+app.use(express.static('./public'));
 
 const POAT = 3000;
 
-app.use('/api/vi/tasks', tasksRoute);
+app.use('/api/v1/tasks', tasksRoute);
 
 const start = async () => {
   try {
