@@ -13,8 +13,9 @@ const showTasks = async () => {
     }
     const allTasks = tasks.map((task) => {
       const { completed, _id, name } = task;
+      //completedがtrueの場合、"task-completed"クラスを追加
       return `
-            <div class="single-task">
+            <div class="single-task ${completed && "task-completed"}">
         <h5>
           <span>
             <i class="far fa-check-circle"></i>
